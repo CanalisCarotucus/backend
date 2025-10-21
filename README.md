@@ -16,7 +16,7 @@ This is simple template without database, reddis and other technologies for fast
 ├── main.py                     # Main application file
 ├── .env                        # Environment variables
 ├── requests.log                # Log of requests made
-├── requirements.txt            # List of Python dependencies
+├── pyproject.toml              # List of Python dependencies
 ├── run.sh                      # Script to run the application
 └── README.md                   # Project documentation
 ```
@@ -34,7 +34,7 @@ This is simple template without database, reddis and other technologies for fast
 2. **Install Required Packages**  
    Run the following command to install the necessary dependencies:  
    ```bash
-   pip install -r requirements.txt
+   uv sync
    ```
 
 3. **Create a `.env` file**

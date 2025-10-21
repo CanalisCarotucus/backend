@@ -13,8 +13,5 @@ async def hello_world():
 @router.post("/data")
 async def hello_world_data(request: Request, data: HelloWorldData):
     data = data.some_data.strip()
-    
-    return {
-        "message": "Hello World!",
-        "data": data
-    }
+
+    return {"message": "Hello World!", "data": data}
