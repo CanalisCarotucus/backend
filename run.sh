@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the virtual environment
-. ./.venv/bin/activate
+. ./.venv/Scripts/activate
 
 # Load environment variables from the .env file in the app directory if it exists
 if [ -f ./.env ]; then

@@ -18,7 +18,8 @@ volumes/
 .vscode/
 
 # Log files
-requests.log
+logs/
+*.log
 
 # Keys
 certs/
