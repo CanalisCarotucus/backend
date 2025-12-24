@@ -11,7 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.database.connection import Base, DATABASE_URL
-from app.database.models import User, Passport
+from app.database.models import User, Passport, UserRole
 
 config = context.config
 

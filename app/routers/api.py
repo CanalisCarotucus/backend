@@ -2,13 +2,14 @@ from fastapi import APIRouter
 
 from app.models.hello_world import HelloWorldData
 from app.models.items import ItemsData
+from app.models.responses import DataResponse
 
 router = APIRouter()
 
 
 @router.get("/")
 async def hello_world():
-    return {"message": "Hello World!"}
+    return DataResponse(data={"message": "Hello World!"})
 
 
 @router.post("/data")

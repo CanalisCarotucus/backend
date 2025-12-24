@@ -1,5 +1,6 @@
 from loguru import logger
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -9,6 +10,7 @@ from app.middlewares.log import log_middle
 from app.config.config import settings
 from app.routers import api, v1, v2
 from app.database.connection import engine
+from app.core.exceptions import BaseAppException
 
 
 @asynccontextmanager
@@ -31,6 +33,14 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     lifespan=lifespan, docs_url=settings.docs_url, redoc_url=settings.redoc_url
 )
+
+
+@app.exception_handler(BaseAppException)
+async def app_exception_handler(request: Request, exc: BaseAppException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail}
+    )
 
 
 app.add_middleware(BaseHTTPMiddleware, dispatch=log_middle)

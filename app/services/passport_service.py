@@ -1,65 +1,49 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
 from typing import Optional
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database.models import Passport, User
-from app.exceptions import UserNotFound, PassportAlreadyExists
+from app.repositories.passport_repository import PassportRepository
+from app.repositories.user_repository import UserRepository
+from app.database.models import Passport
+from app.core.exceptions import UserNotFound, PassportNotFound, PassportAlreadyExists
 
 
 class PassportService:
-    async def get_passport(self, db: AsyncSession, passport_id: int) -> Optional[Passport]:
-        query = select(Passport).where(Passport.id == passport_id)
-        result = await db.execute(query)
-        return result.scalar_one_or_none()
+    def __init__(
+        self,
+        passport_repository: PassportRepository,
+        user_repository: UserRepository
+    ):
+        self.passport_repository = passport_repository
+        self.user_repository = user_repository
 
-    async def get_passport_by_user_id(self, db: AsyncSession, user_id: int) -> Optional[Passport]:
-        query = select(Passport).where(Passport.user_id == user_id)
-        result = await db.execute(query)
-        return result.scalar_one_or_none()
+    async def get_passport(self, passport_id: int) -> Passport:
+        passport = await self.passport_repository.get_by_id(passport_id)
+        if passport is None:
+            raise PassportNotFound(f"Passport with id {passport_id} not found")
+        return passport
+
+    async def get_passport_by_user_id(self, user_id: int) -> Optional[Passport]:
+        return await self.passport_repository.get_by_user_id(user_id)
 
     async def create_passport_for_user(
-        self, db: AsyncSession, user_id: int, passport_data: dict
+        self, user_id: int, passport_data: dict
     ) -> Passport:
-        query = select(User).where(User.id == user_id)
-        result = await db.execute(query)
-        user = result.scalar_one_or_none()
-
+        user = await self.user_repository.get_by_id(user_id)
         if user is None:
             raise UserNotFound(f"User with id {user_id} not found")
 
-        existing = await self.get_passport_by_user_id(db, user_id)
+        existing = await self.passport_repository.get_by_user_id(user_id)
         if existing:
             raise PassportAlreadyExists(f"User with id {user_id} already has a passport")
 
         passport_data["user_id"] = user_id
-        passport = Passport(**passport_data)
-        db.add(passport)
-        await db.flush()
-        await db.refresh(passport)
+        return await self.passport_repository.create(passport_data)
+
+    async def update_passport(self, passport_id: int, passport_data: dict) -> Passport:
+        passport = await self.passport_repository.update(passport_id, passport_data)
+        if passport is None:
+            raise PassportNotFound(f"Passport with id {passport_id} not found")
         return passport
 
-    async def update_passport(
-        self, db: AsyncSession, passport_id: int, passport_data: dict
-    ) -> Optional[Passport]:
-        passport = await self.get_passport(db, passport_id)
-        if passport is None:
-            return None
-
-        for key, value in passport_data.items():
-            setattr(passport, key, value)
-
-        await db.flush()
-        await db.refresh(passport)
-        return passport
-
-    async def delete_passport(self, db: AsyncSession, passport_id: int) -> bool:
-        passport = await self.get_passport(db, passport_id)
-        if passport is None:
-            return False
-
-        await db.delete(passport)
-        await db.flush()
-        return True
-
-
-passport_service = PassportService()
+    async def delete_passport(self, passport_id: int) -> bool:
+        return await self.passport_repository.delete(passport_id)

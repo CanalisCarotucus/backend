@@ -10,28 +10,39 @@ FastAPI project template with async SQLAlchemy, PostgreSQL, and Alembic migratio
 ├── app/                       # Main application directory
 │   ├── config/                # Configuration files
 │   │   └── config.py          # Settings and environment variables
+│   ├── core/                  # Core application components
+│   │   ├── dependencies.py    # FastAPI dependencies
+│   │   └── exceptions.py      # Custom exceptions
 │   ├── database/              # Database configuration
 │   │   ├── connection.py      # Database engine and session management
 │   │   └── models.py          # SQLAlchemy ORM models
-│   ├── exceptions.py          # Custom exceptions
+│   ├── main.py                # FastAPI application entry point
 │   ├── middlewares/           # Middleware components
 │   │   └── log.py             # Request logging middleware
 │   ├── models/                # Pydantic schemas (API models)
-│   │   ├── users.py           # User request/response schemas
-│   │   └── passports.py       # Passport request/response schemas
+│   │   ├── hello_world.py     # Hello world request/response schemas
+│   │   ├── items.py           # Items request/response schemas
+│   │   ├── passports.py       # Passport request/response schemas
+│   │   ├── responses.py       # Common response schemas
+│   │   └── users.py           # User request/response schemas
+│   ├── repositories/          # Data access layer
+│   │   ├── base.py            # Base repository class
+│   │   ├── passport_repository.py # Passport repository
+│   │   └── user_repository.py # User repository
 │   ├── routers/               # API route definitions
 │   │   ├── api.py             # Base API routes (hello world)
 │   │   ├── v1.py              # API v1 endpoints
 │   │   └── v2.py              # API v2 endpoints
-│   ├── services/              # Business logic layer
-│   │   ├── user_service.py    # User service
-│   │   └── passport_service.py # Passport service
-│   └── main.py                # FastAPI application entry point
+│   └── services/              # Business logic layer
+│       ├── passport_service.py # Passport service
+│       └── user_service.py    # User service
 ├── alembic.ini                 # Alembic configuration file
 ├── .env                        # Environment variables
 ├── logs/                       # Application logs directory
 ├── pyproject.toml              # Python dependencies
 ├── run.sh                      # Script to run the application
+├── test.sh                     # Script to run tests
+├── uv.lock                     # Dependency lock file
 └── README.md                   # Project documentation
 ```
 

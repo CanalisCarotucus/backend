@@ -1,14 +1,35 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum as SQLEnum
+from sqlalchemy.orm import relationship, validates
+from sqlalchemy.sql import func
+from datetime import datetime
+import enum
+from email_validator import validate_email, EmailNotValidError
 from app.database.connection import Base
+
+
+class UserRole(str, enum.Enum):
+    USER = "user"
+    ADMIN = "admin"
 
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), nullable=False, unique=True, index=True)
+    email = Column(String(100), nullable=False, unique=True, index=True)
     first_name = Column(String(30), nullable=False)
     last_name = Column(String(30), nullable=False)
+    role = Column(SQLEnum(UserRole), nullable=False, default=UserRole.USER)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+    @validates('email')
+    def validate_email(self, key, email):
+        try:
+            validation = validate_email(email, check_deliverability=False)
+            return validation.normalized.lower()
+        except EmailNotValidError as e:
+            raise ValueError(f"Invalid email format: {email}") from e
 
     passport = relationship(
         "Passport",
