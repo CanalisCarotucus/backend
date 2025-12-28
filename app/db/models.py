@@ -4,12 +4,12 @@ from sqlalchemy.sql import func
 from datetime import datetime
 import enum
 from email_validator import validate_email, EmailNotValidError
-from app.database.connection import Base
+from app.db.connection import Base
 
 
 class UserRole(str, enum.Enum):
-    USER = "user"
-    ADMIN = "admin"
+    user = "user"
+    admin = "admin"
 
 
 class User(Base):
@@ -20,7 +20,7 @@ class User(Base):
     email = Column(String(100), nullable=False, unique=True, index=True)
     first_name = Column(String(30), nullable=False)
     last_name = Column(String(30), nullable=False)
-    role = Column(SQLEnum(UserRole), nullable=False, default=UserRole.USER)
+    role = Column(SQLEnum(UserRole), nullable=False, default=UserRole.user)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     @validates('email')
@@ -55,3 +55,4 @@ class Passport(Base):
     )
 
     user = relationship("User", back_populates="passport")
+

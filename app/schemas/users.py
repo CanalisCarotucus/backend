@@ -2,8 +2,7 @@ from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import Optional, List, TYPE_CHECKING
 from datetime import datetime
 
-if TYPE_CHECKING:
-    from app.models.passports import PassportResponse
+from app.schemas.passports import PassportResponse
 
 
 class UserBase(BaseModel):
@@ -22,6 +21,8 @@ class PassportInUserCreate(BaseModel):
 
 
 class UserCreateWithPassport(UserBase):
+    username: str = Field(..., min_length=1, max_length=50)
+    email: EmailStr = Field(..., max_length=100)
     passport: Optional[PassportInUserCreate] = None
 
 
@@ -67,3 +68,4 @@ class UserWithPassportResponse(UserResponse):
 
 class UsersListResponse(BaseModel):
     users: List[UserResponse]
+

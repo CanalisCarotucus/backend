@@ -8,8 +8,8 @@ from sqlalchemy import text
 
 from app.middlewares.log import log_middle
 from app.config.config import settings
-from app.routers import api, v1, v2
-from app.database.connection import engine
+from app.api import users, passports, hello_world
+from app.db.connection import engine
 from app.core.exceptions import BaseAppException
 
 
@@ -53,9 +53,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(api.router)
-app.include_router(v1.router)
-app.include_router(v2.router)
+app.include_router(hello_world.router)
+app.include_router(users.router)
+app.include_router(passports.router)
 
 if __name__ == "__main__":
     import uvicorn
