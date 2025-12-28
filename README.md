@@ -8,37 +8,27 @@ FastAPI project template with async SQLAlchemy, PostgreSQL, and Alembic migratio
 │   ├── versions/              # Migration files
 │   └── env.py                 # Alembic environment configuration
 ├── app/                       # Main application directory
-│   ├── api/                   # Configuration files
+│   ├── api/                   # API route definitions
 │   │   ├── hello_world.py     # Hello_world endpoint
 │   │   ├── passports.py       # API passports
 │   │   └── users.py           # API users
 │   ├── core/                  # Core application components
 │   │   └── exceptions.py      # Custom exceptions
-│   ├── crud                   # CRUD pipeline
-
+│   ├── crud/                  # CRUD pipeline
+│   │   ├── passports.py       # CRUD passports
+│   │   └── users.py           # CRUD users
 │   ├── db/                    # Database configuration
 │   │   ├── connection.py      # Database engine and session management
 │   │   └── models.py          # SQLAlchemy ORM models
 │   ├── main.py                # FastAPI application entry point
 │   ├── middlewares/           # Middleware components
 │   │   └── log.py             # Request logging middleware
-│   ├── models/                # Pydantic schemas (API models)
+│   ├── schemas/               # Pydantic schemas (API models)
 │   │   ├── hello_world.py     # Hello world request/response schemas
-│   │   ├── items.py           # Items request/response schemas
+│   │   ├── errors.py          # Errors request/response schemas
 │   │   ├── passports.py       # Passport request/response schemas
 │   │   ├── responses.py       # Common response schemas
 │   │   └── users.py           # User request/response schemas
-│   ├── repositories/          # Data access layer
-│   │   ├── base.py            # Base repository class
-│   │   ├── passport_repository.py # Passport repository
-│   │   └── user_repository.py # User repository
-│   ├── routers/               # API route definitions
-│   │   ├── api.py             # Base API routes (hello world)
-│   │   ├── v1.py              # API v1 endpoints
-│   │   └── v2.py              # API v2 endpoints
-│   └── services/              # Business logic layer
-│       ├── passport_service.py # Passport service
-│       └── user_service.py    # User service
 ├── alembic.ini                 # Alembic configuration file
 ├── .env                        # Environment variables
 ├── logs/                       # Application logs directory
