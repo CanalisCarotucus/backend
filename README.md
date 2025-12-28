@@ -8,12 +8,15 @@ FastAPI project template with async SQLAlchemy, PostgreSQL, and Alembic migratio
 │   ├── versions/              # Migration files
 │   └── env.py                 # Alembic environment configuration
 ├── app/                       # Main application directory
-│   ├── config/                # Configuration files
-│   │   └── config.py          # Settings and environment variables
+│   ├── api/                   # Configuration files
+│   │   ├── hello_world.py     # Hello_world endpoint
+│   │   ├── passports.py       # API passports
+│   │   └── users.py           # API users
 │   ├── core/                  # Core application components
-│   │   ├── dependencies.py    # FastAPI dependencies
 │   │   └── exceptions.py      # Custom exceptions
-│   ├── database/              # Database configuration
+│   ├── crud                   # CRUD pipeline
+
+│   ├── db/                    # Database configuration
 │   │   ├── connection.py      # Database engine and session management
 │   │   └── models.py          # SQLAlchemy ORM models
 │   ├── main.py                # FastAPI application entry point
@@ -40,8 +43,7 @@ FastAPI project template with async SQLAlchemy, PostgreSQL, and Alembic migratio
 ├── .env                        # Environment variables
 ├── logs/                       # Application logs directory
 ├── pyproject.toml              # Python dependencies
-├── run.sh                      # Script to run the application
-├── test.sh                     # Script to run tests
+├── run.sh                      # Script to run the application                   
 ├── uv.lock                     # Dependency lock file
 └── README.md                   # Project documentation
 ```
