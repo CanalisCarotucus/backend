@@ -16,11 +16,10 @@ volumes/
 # Config files
 .idea/
 .vscode/
-
+.vs/
 # Log files
 logs/
 *.log
 
 # Keys
 certs/
-
