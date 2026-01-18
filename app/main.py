@@ -17,7 +17,7 @@ from app.core.exceptions import BaseAppException
 async def lifespan(app: FastAPI):
     logger.info("Starting up...")
     try:
-        async with engine.begin() as conn:
+        async with engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
         logger.info("Database connection established")
     except Exception as e:
@@ -37,10 +37,7 @@ app = FastAPI(
 
 @app.exception_handler(BaseAppException)
 async def app_exception_handler(request: Request, exc: BaseAppException):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail": exc.detail}
-    )
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
 
 app.add_middleware(BaseHTTPMiddleware, dispatch=log_middle)

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from app.schemas.hello_world import HelloWorldData
-from app.schemas.responses import DataResponse
+from app.models.hello_world import HelloWorldData
+from app.models.responses import DataResponse
 
 router = APIRouter(tags=["hello"])
 
@@ -13,5 +13,6 @@ async def hello_world():
 
 @router.post("/data", response_model=DataResponse[dict])
 async def hello_world_data(data: HelloWorldData):
-    return DataResponse(data={"message": "Hello World!", "data": data.some_data.strip()})
-
+    return DataResponse(
+        data={"message": "Hello World!", "data": data.some_data.strip()}
+    )

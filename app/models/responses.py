@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Generic, TypeVar, List
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class DataResponse(BaseModel, Generic[T]):
@@ -10,4 +10,3 @@ class DataResponse(BaseModel, Generic[T]):
 
 class ListDataResponse(BaseModel, Generic[T]):
     data: List[T]
-

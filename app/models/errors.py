@@ -3,13 +3,15 @@ from pydantic import BaseModel, Field, ConfigDict
 
 class ErrorResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    
+
     detail: str = Field(..., description="Описание ошибки")
     status_code: int = Field(..., description="HTTP статус код")
 
 
 class ValidationErrorResponse(ErrorResponse):
-    detail: str = Field(default="Validation error", description="Описание ошибки валидации")
+    detail: str = Field(
+        default="Validation error", description="Описание ошибки валидации"
+    )
     status_code: int = Field(default=400, description="HTTP статус код")
 
 
@@ -19,7 +21,9 @@ class NotFoundErrorResponse(ErrorResponse):
 
 
 class PermissionDeniedErrorResponse(ErrorResponse):
-    detail: str = Field(default="Permission denied", description="Описание ошибки доступа")
+    detail: str = Field(
+        default="Permission denied", description="Описание ошибки доступа"
+    )
     status_code: int = Field(default=403, description="HTTP статус код")
 
 
@@ -29,6 +33,7 @@ class BadRequestErrorResponse(ErrorResponse):
 
 
 class InternalServerErrorResponse(ErrorResponse):
-    detail: str = Field(default="Internal server error", description="Описание внутренней ошибки")
+    detail: str = Field(
+        default="Internal server error", description="Описание внутренней ошибки"
+    )
     status_code: int = Field(default=500, description="HTTP статус код")
-

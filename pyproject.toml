@@ -18,3 +18,9 @@ dependencies = [
     "alembic==1.13.2",
     "email-validator>=2.3.0",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=25.9.0",
+    "flake8>=7.3.0",
+]

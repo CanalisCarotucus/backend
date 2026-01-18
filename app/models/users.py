@@ -1,8 +1,8 @@
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
-from typing import Optional, List, TYPE_CHECKING
+from typing import Optional, List
 from datetime import datetime
 
-from app.schemas.passports import PassportResponse
+from app.models.passports import PassportResponse
 
 
 class UserBase(BaseModel):
@@ -68,4 +68,3 @@ class UserWithPassportResponse(UserResponse):
 
 class UsersListResponse(BaseModel):
     users: List[UserResponse]
-

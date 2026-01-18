@@ -6,7 +6,7 @@ from pydantic import Field
 
 class Settings(BaseSettings):
     env: str = Field(default="dev", description="Environment (dev/prod)")
-    
+
     database_url: Optional[str] = Field(
         default=None,
         description="Database URL from .env",
@@ -48,7 +48,9 @@ class Settings(BaseSettings):
             self.docs_url = None
             self.redoc_url = None
             if self.cors_origins:
-                self.origins = [origin.strip() for origin in self.cors_origins.split(",")]
+                self.origins = [
+                    origin.strip() for origin in self.cors_origins.split(",")
+                ]
             else:
                 self.origins = [
                     "https://example.com",
@@ -63,7 +65,9 @@ class Settings(BaseSettings):
             self.docs_url = "/docs"
             self.redoc_url = "/redoc"
             if self.cors_origins:
-                self.origins = [origin.strip() for origin in self.cors_origins.split(",")]
+                self.origins = [
+                    origin.strip() for origin in self.cors_origins.split(",")
+                ]
             else:
                 self.origins = ["*"]
 

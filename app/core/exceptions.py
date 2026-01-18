@@ -50,4 +50,3 @@ class ValidationError(BaseAppException):
 
     def __init__(self, detail: str = "Validation error"):
         super().__init__(detail=detail, status_code=self.status_code)
-

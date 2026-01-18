@@ -7,19 +7,13 @@ from fastapi.responses import JSONResponse
 from app.config.config import settings
 
 logger.remove()
-logger.add(
-    "logs/requests.log", enqueue=True, rotation="1 week"
-)
-logger.add(
-    sys.stdout, colorize=True, level="INFO"
-)
+logger.add("logs/requests.log", enqueue=True, rotation="1 week")
+logger.add(sys.stdout, colorize=True, level="INFO")
 console = Console()
 
 
 async def log_middle(request: Request, call_next):
-    request_id = request.headers.get(
-        "X-Request-ID", "N/A"
-    )
+    request_id = request.headers.get("X-Request-ID", "N/A")
     logger.info(f"[{request_id}] Incoming Request: {request.method} {request.url.path}")
 
     if settings.debug:

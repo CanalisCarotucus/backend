@@ -14,16 +14,16 @@ FastAPI project template with async SQLAlchemy, PostgreSQL, and Alembic migratio
 │   │   └── users.py           # API users
 │   ├── core/                  # Core application components
 │   │   └── exceptions.py      # Custom exceptions
-│   ├── crud/                  # CRUD pipeline
-│   │   ├── passports.py       # CRUD passports
-│   │   └── users.py           # CRUD users
 │   ├── db/                    # Database configuration
 │   │   ├── connection.py      # Database engine and session management
-│   │   └── models.py          # SQLAlchemy ORM models
+│   │   ├── crud/              # CRUD functions (no classes)
+│   │   │   ├── passports.py   # CRUD passports
+│   │   │   └── users.py       # CRUD users
+│   │   └── schema.py          # SQLAlchemy ORM models
 │   ├── main.py                # FastAPI application entry point
 │   ├── middlewares/           # Middleware components
 │   │   └── log.py             # Request logging middleware
-│   ├── schemas/               # Pydantic schemas (API models)
+│   ├── models/                # Pydantic schemas (API models)
 │   │   ├── hello_world.py     # Hello world request/response schemas
 │   │   ├── errors.py          # Errors request/response schemas
 │   │   ├── passports.py       # Passport request/response schemas
@@ -48,8 +48,8 @@ FastAPI project template with async SQLAlchemy, PostgreSQL, and Alembic migratio
 1. **Clone repository**  
    Run the following command to download project:  
    ```bash
-   git clone -b simple https://github.com/iismoilov7/pinkman.git
-   cd pinkman
+   git clone -b simple https://github.com/CanalisCarotucus/backend
+   cd backend
    ```
 
 2. **Install Required Packages**  
@@ -87,21 +87,28 @@ Once the application is running, you can access:
 - Swagger UI: http://127.0.0.1:8081/docs
 - ReDoc: http://127.0.0.1:8081/redoc
 
-API endpoints are versioned:
-- `/api/v1/*` - API version 1 (users without passport data)
-- `/api/v2/*` - API version 2 (users with passport data)
-
 ## API Endpoints
 
-### API v1
-- `GET /api/v1/users` - Get all users (without passport data)
-- `GET /api/v1/users/{user_id}` - Get user by ID (without passport data)
-- `POST /api/v1/users` - Create user (without passport)
-- `PUT /api/v1/users/{user_id}` - Update user
-- `DELETE /api/v1/users/{user_id}` - Delete user
+### Users
+- `GET /api/users` - Get all users
+- `GET /api/users/{user_id}` - Get user by ID
+- `POST /api/users` - Create user
+- `PUT /api/users/{user_id}` - Update user
+- `DELETE /api/users/{user_id}` - Delete user
+- `GET /api/users/{user_id}/with-passport` - Get user with passport
+- `POST /api/users/with-passport` - Create user with optional passport
+- `GET /api/users/{user_id}/profile` - Get profile
+- `PUT /api/users/{user_id}/profile` - Update profile
+- `PUT /api/users/{user_id}/profile/admin` - Admin update profile
 
-### API v2
-- `GET /api/v2/users/{user_id}` - Get user by ID (with passport data)
-- `POST /api/v2/users` - Create user (with optional passport)
-- `PUT /api/v2/users/{user_id}` - Update user (returns with passport data)
-- `DELETE /api/v2/users/{user_id}` - Delete user
+### Passports
+- `GET /api/passports` - Get all passports
+- `GET /api/passports/{passport_id}` - Get passport by ID
+- `GET /api/passports/user/{user_id}` - Get passport by user ID
+- `POST /api/passports` - Create passport for user
+- `PUT /api/passports/{passport_id}` - Update passport
+- `DELETE /api/passports/{passport_id}` - Delete passport
+
+### Hello World
+- `GET /` - Health/hello endpoint
+- `POST /data` - Echo data
